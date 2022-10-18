@@ -4,11 +4,46 @@ import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import "./styles/App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
+// import { Sample } from "./components/sample"
+import Sample from "./components/Sample"
 // Constantsを宣言する: constとは値書き換えを禁止した変数を宣言する方法です。
 const TWITTER_HANDLE = "black_tank_top";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
-const OPENSEA_LINK = "";
-const TOTAL_MINT_COUNT = 50;
+// const OPENSEA_LINK = "";
+// const TOTAL_MINT_COUNT = 50;
+// const MAX_SUPPLY = 5;
+// const mintCounter = 0;
+const CONTRACT_ADDRESS ="0x41e70AfFC39beB25A90dC9d782ad7a98D11c3E82";
+
+// export const Sample = () => {
+//   const [mintCount, setCount] = useState(0);
+//   useEffect(() => {
+//     const { ethereum } = window;
+//     const provider = new ethers.providers.Web3Provider(ethereum);
+//     const signer = provider.getSigner();
+//     const connectedContract = new ethers.Contract(
+//       CONTRACT_ADDRESS,
+//       myEpicNft.abi,
+//       signer
+//     );
+//     // mint 後に emit された NewEpicNFTMinted から値を受け取る
+//     const handleEmitEvent = (_from, tokenId) => {
+//       const latestMintCount = tokenId.toNumber();
+//       // ✅ ここで state を更新させる(大事)
+//       setCount(latestMintCount);
+//     };
+//     // イベントリスナーの購読：
+//     // NewEpicNFTMinted が emit されたら、handleEmitEvent を呼ぶ宣言
+//     connectedContract.on("NewEpicNFTMinted", handleEmitEvent);
+//     return () => {
+//       connectedContract.off("NewEpicNFTMinted", handleEmitEvent);
+//     };
+//   }, []);
+//   return (
+//       {mintCount} / {MAX_SUPPLY}
+//   );
+// }; 
+
 const App = () => {
   /*
    * ユーザーのウォレットアドレスを格納するために使用する状態変数を定義します。
@@ -27,6 +62,7 @@ const App = () => {
     } else {
       console.log("We have the ethereum object", ethereum);
     }
+    console.log("mintCount:", Sample)
     /* ユーザーが認証可能なウォレットアドレスを持っている場合は、
      * ユーザーに対してウォレットへのアクセス許可を求める。
      * 許可されれば、ユーザーの最初のウォレットアドレスを
@@ -92,7 +128,8 @@ const App = () => {
           signer
         );
         // Event が　emit される際に、コントラクトから送信される情報を受け取っています。
-        connectedContract.on("NewEpicNFTMinted", (from, tokenId) => {
+        connectedContract.on("NewEpicNFTMinted", (from, tokenId, mintCount) => {
+          // mintCounter = mintCount.toNumber();
           console.log(from, tokenId.toNumber());
           alert(
             `あなたのウォレットに NFT を送信しました。OpenSea に表示されるまで最大で10分かかることがあります。NFT へのリンクはこちらです: https://testnets.opensea.io/assets/${CONTRACT_ADDRESS}/${tokenId.toNumber()}`
@@ -108,8 +145,6 @@ const App = () => {
   };
 
   const askContractToMintNft = async () => {
-    const CONTRACT_ADDRESS =
-      "0x82d146Ef6f063960eA8481631178d9054Fd282a3";
     try {
       const { ethereum } = window;
       if (ethereum) {
@@ -126,7 +161,7 @@ const App = () => {
         await nftTxn.wait();
 
         console.log(
-          `Mined, see transaction: https://goerli.etherscan.io/tx/${nftTxn.hash}`
+          `Minted, see transaction: https://goerli.etherscan.io/tx/${nftTxn.hash}`
         );
       } else {
         console.log("Ethereum object doesn't exist!");
@@ -157,6 +192,8 @@ const App = () => {
         <div className="header-container">
           <p className="header gradient-text">My NFT Collection</p>
           <p className="sub-text">あなただけの特別な NFT を Mint しよう💫</p>
+          {/* TODO:Mint数表示されていない */}
+          <Sample />
           {/*条件付きレンダリングを追加しました
           // すでに接続されている場合は、
           // Connect to Walletを表示しないようにします。*/}
