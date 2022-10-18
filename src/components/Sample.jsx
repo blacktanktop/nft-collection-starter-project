@@ -1,7 +1,7 @@
 import myEpicNft from "../utils/MyEpicNFT.json";
 import { useState, useEffect } from 'react';
 import { ethers } from "ethers";
-const MAX_SUPPLY = 100;
+const MAX_SUPPLY = 50;
 const CONTRACT_ADDRESS ="0x41e70AfFC39beB25A90dC9d782ad7a98D11c3E82";
 const Sample = () => {
   const [mintCount, setCount] = useState(0);
