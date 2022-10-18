@@ -13,7 +13,7 @@ const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 // const TOTAL_MINT_COUNT = 50;
 // const MAX_SUPPLY = 5;
 // const mintCounter = 0;
-const CONTRACT_ADDRESS ="0x41e70AfFC39beB25A90dC9d782ad7a98D11c3E82";
+const CONTRACT_ADDRESS ="0xceca075f88E670d941c34df93d25668dea091601";
 
 // export const Sample = () => {
 //   const [mintCount, setCount] = useState(0);
