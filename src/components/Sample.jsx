@@ -28,7 +28,7 @@ const Sample = () => {
     };
   }, []);
   return (
-    <p>
+    <p className="sub-text">
       {mintCount} / {MAX_SUPPLY}
     </p>
   );
