@@ -1,5 +1,5 @@
 // App.js
-import React, { useEffect } from "react";
+import React, { useEffect, useState } from "react";
 import "./styles/App.css";
 import twitterLogo from "./assets/twitter-logo.svg";
 // Constantsを宣言する: constとは値書き換えを禁止した変数を宣言する方法です。
@@ -25,12 +25,11 @@ const App = () => {
     } else {
       console.log("We have the ethereum object", ethereum);
     }
-    /*
-		// ユーザーが認証可能なウォレットアドレスを持っている場合は、
-    // ユーザーに対してウォレットへのアクセス許可を求める。
-    // 許可されれば、ユーザーの最初のウォレットアドレスを
-    // accounts に格納する。
-    */
+    /* ユーザーが認証可能なウォレットアドレスを持っている場合は、
+     * ユーザーに対してウォレットへのアクセス許可を求める。
+     * 許可されれば、ユーザーの最初のウォレットアドレスを
+     * accounts に格納する。
+     */
     const accounts = await ethereum.request({ method: "eth_accounts" });
 
     if (accounts.length !== 0) {
@@ -41,9 +40,39 @@ const App = () => {
       console.log("No authorized account found");
     }
   };
+
+  /*
+   * connectWallet メソッドを実装します。
+   */
+  const connectWallet = async () => {
+    try {
+      const { ethereum } = window;
+      if (!ethereum) {
+        alert("Get MetaMask!");
+        return;
+      }
+      /*
+       * ウォレットアドレスに対してアクセスをリクエストしています。
+       */
+      const accounts = await ethereum.request({
+        method: "eth_requestAccounts",
+      });
+      console.log("Connected", accounts[0]);
+      /*
+       * ウォレットアドレスを currentAccount に紐付けます。
+       */
+      setCurrentAccount(accounts[0]);
+    } catch (error) {
+      console.log(error);
+    }
+  };
+
   // renderNotConnectedContainer メソッドを定義します。
   const renderNotConnectedContainer = () => (
-    <button className="cta-button connect-wallet-button">
+    <button
+      onClick={connectWallet}
+      className="cta-button connect-wallet-button"
+    >
       Connect to Wallet
     </button>
   );
@@ -59,8 +88,16 @@ const App = () => {
         <div className="header-container">
           <p className="header gradient-text">My NFT Collection</p>
           <p className="sub-text">あなただけの特別な NFT を Mint しよう💫</p>
-          {/* メソッドを追加します */}
-          {renderNotConnectedContainer()}
+          {/*条件付きレンダリングを追加しました
+          // すでに接続されている場合は、
+          // Connect to Walletを表示しないようにします。*/}
+          {currentAccount === "" ? (
+            renderNotConnectedContainer()
+          ) : (
+            <button onClick={null} className="cta-button connect-wallet-button">
+              Mint NFT
+            </button>
+          )}
         </div>
         <div className="footer-container">
           <img alt="Twitter Logo" className="twitter-logo" src={twitterLogo} />
