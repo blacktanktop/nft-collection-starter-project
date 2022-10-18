@@ -10,39 +10,7 @@ import Sample from "./components/Sample"
 const TWITTER_HANDLE = "black_tank_top";
 const TWITTER_LINK = `https://twitter.com/${TWITTER_HANDLE}`;
 // const OPENSEA_LINK = "";
-// const TOTAL_MINT_COUNT = 50;
-// const MAX_SUPPLY = 5;
-// const mintCounter = 0;
 const CONTRACT_ADDRESS ="0xceca075f88E670d941c34df93d25668dea091601";
-
-// export const Sample = () => {
-//   const [mintCount, setCount] = useState(0);
-//   useEffect(() => {
-//     const { ethereum } = window;
-//     const provider = new ethers.providers.Web3Provider(ethereum);
-//     const signer = provider.getSigner();
-//     const connectedContract = new ethers.Contract(
-//       CONTRACT_ADDRESS,
-//       myEpicNft.abi,
-//       signer
-//     );
-//     // mint 後に emit された NewEpicNFTMinted から値を受け取る
-//     const handleEmitEvent = (_from, tokenId) => {
-//       const latestMintCount = tokenId.toNumber();
-//       // ✅ ここで state を更新させる(大事)
-//       setCount(latestMintCount);
-//     };
-//     // イベントリスナーの購読：
-//     // NewEpicNFTMinted が emit されたら、handleEmitEvent を呼ぶ宣言
-//     connectedContract.on("NewEpicNFTMinted", handleEmitEvent);
-//     return () => {
-//       connectedContract.off("NewEpicNFTMinted", handleEmitEvent);
-//     };
-//   }, []);
-//   return (
-//       {mintCount} / {MAX_SUPPLY}
-//   );
-// }; 
 
 const App = () => {
   /*
