@@ -1,4 +1,5 @@
 // App.js
+import myEpicNft from "./utils/MyEpicNFT.json";
 import { ethers } from "ethers";
 import React, { useEffect, useState } from "react";
 import "./styles/App.css";
